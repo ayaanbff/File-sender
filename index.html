@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File-sender</title>
+    <script src="jquery.js"></script>
+</head>
+<style>
+     #qw{
+        width: 100%;
+display:flex;
+justify-content:center     ;
+height:90%;
+flex-direction: column;
+/* align-content: center; */
+/* justify-items: center; */
+align-items: center;
+    } 
+button{
+border:0;
+border-radius:25px;
+width:12%;
+min-height:40%;
+background-color:black;
+color:white;
+font-weight:bolder;
+cursor:pointer;
+transition:transform .5s;
+margin: 3%;
+}
+#as{
+width:100%;
+height:15%;
+display:flex;
+justify-content:center     ;
+align-items:center
+}
+input,#file-upload-button{
+height:16%
+}
+input#file-upload-button{
+height:100%
+}
+button:hover{
+transform:scale(1.1);
+}
+input#file-upload-button{
+cursor:pointer
+}
+#filea{
+    width: 90%;
+    text-align: center;
+    color: white;
+    font-family: monospace;
+ max-height: 60%;
+ overflow-y: scroll;
+ overflow-x: hidden;
+ background-color: black;
+}
+#per{
+    width: 100%;
+    text-align: center;
+    color: black;
+    font-family: monospace;
+    font-weight: bolder;
+font-size: 2rem;
+margin-top:2%;
+}
+@media (max-width:600px){
+    button{
+height:25%;
+width: 75%;
+}
+#as{
+    width: 98%;
+}
+#per{
+    font-size: 1.2rem;
+}
+}
+
+</style>
+<body style="position:absolute;background-color:grey;width: 100%;margin: 0;display: flex;justify-content: center;justify-items: center;align-items: center;height: 100%;align-content: center;">
+    <div id="qw">
+<div id="ge" style="position:absolute;width:100%;font-family:monospace;top:1px;text-align:center;background-color:rgb(17,17,17);color:white;left:0;border-radius:25px"><h1>File-Sender</h1>  </div>
+    <form style="display: flex;justify-content: center;align-items: center;width: 100%;" action="/data" method="post" id="as" enctype="multipart/form-data">
+<input style="visibility:hidden;position: absolute;" type="file" name="asd" id="asd" multiple>
+<button type="button" style="background-color: rgb(7,52,200);" id="sfile"> Select Files</button>
+<button id="aq" type="submit">Send files</button>
+    </form>
+    <div id="filea"></div>
+<div id="per"></div>
+    </div>
+<script type="application/javascript" defer>
+    var a = document.getElementById("as")
+    $("#sfile").on("click",function(){
+        $("#asd").click()
+    })
+    $("#asd").on("change",function(){
+        let u=document.getElementById("asd")
+        for(let i=0;i<u.files.length;i++){
+               var a = document.createElement("div")
+            a.style.textAlign="center"
+            a.innerText=u.files[i].name
+document.getElementById("filea").append(a)
+        }
+    })
+    a.onsubmit=(e)=>{
+        e.preventDefault()
+      
+        var form=document.getElementById('as')
+        console.log("as")
+        $.ajax({
+            type:"POST",
+            url:"/data",
+            xhr:function(){
+                var xhr = new window.XMLHttpRequest()
+                xhr.upload.addEventListener("progress",function(e){
+                    if(e.lengthComputable){
+                        var s = ((e.loaded/e.total)*100).toFixed(2)
+                        $("#per").text(s+"%")
+                    }
+                },false)
+                return xhr
+            },
+            data:new FormData(form),
+            processData:false,
+            contentType:false,
+          error:(err)=>{console.log(err)},
+          success:(res)=>{alert(res)
+        setTimeout(()=>{window.location.href="/"
+    
+    },1000)
+        },
+        })
+    }
+</script>
+</body>
+</html>
