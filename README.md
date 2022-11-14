@@ -15,3 +15,7 @@ and then the store the uploaded file in **"file"** folder of the server .
 3. Now within the same folder create a folder with name **"file"** .
 4. Now open the cmd in the same folder and write `npm i`
 5. Now , run the s.js file with `node s.js` .
+
+
+
+**Note**: Server will be hosted locally with port 3000 . you can access the website by routing to `http://localhost:3000`
